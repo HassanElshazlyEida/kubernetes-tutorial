@@ -11,21 +11,31 @@ spec:
           name: http
           protocol: TCP
           
-      # livenessProbe: 
+      livenessProbe: 
         # Ensures that the container is "live" by performing one or more checks
         # if the container failed the liveness probe, Kubernetes restarts it
-      #   httpGet:
-      #     path : / # or any other get routes /health
-      #     port: 8080
-      #   initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
-      #   timeoutSeconds: 1 # How many S waiting for the response of the route, default is 1 , if not working it will restart
-      #   periodSeconds: 60 # test the container per S, default is 10
-      #   failureThreshold: 3 # if the response not receiving 2xx, how many times it should accept failure to restart the container again, default is 3
-      #   successThreshold: 1 # if the response receiving 2xx, how many times it should check the route correctness to pass the testing, default is 1
+        httpGet:
+          path : / # or any other get routes /health
+          port: 8080
+        initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
+        timeoutSeconds: 1 # How many S waiting for the response of the route, default is 1 , if not working it will restart
+        periodSeconds: 60 # test the container per S, default is 10
+        failureThreshold: 3 # if the response not receiving 2xx, how many times it should accept failure to restart the container again, default is 3
+        successThreshold: 1 # if the response receiving 2xx, how many times it should check the route correctness to pass the testing, default is 1
      
       readinessProbe:
         # Ensures that the container is "ready to receive requests" by preforming one or more checks.
         # if the container fails the readiness probes, Kubernetes will not route requests to it (PENDING) (it will not restart it) 
+        httpGet:
+          path : / # or any other get routes /health
+          port: 8080
+        initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
+        periodSeconds: 60 # test the container per S, default is 10
+
+      startupProbe:
+        # Checks whether an application within a container has successfully started,
+        # delaying Liveness and Readiness probes until the start up is complete
+        # it only run one time at the beginning 
         httpGet:
           path : / # or any other get routes /health
           port: 8080
