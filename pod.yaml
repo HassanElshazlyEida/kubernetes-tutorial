@@ -10,12 +10,24 @@ spec:
         - containerPort : 80
           name: http
           protocol: TCP
-      livenessProbe: # if the checks is failed, the container will restart again
+          
+      # livenessProbe: 
+        # Ensures that the container is "live" by performing one or more checks
+        # if the container failed the liveness probe, Kubernetes restarts it
+      #   httpGet:
+      #     path : / # or any other get routes /health
+      #     port: 8080
+      #   initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
+      #   timeoutSeconds: 1 # How many S waiting for the response of the route, default is 1 , if not working it will restart
+      #   periodSeconds: 60 # test the container per S, default is 10
+      #   failureThreshold: 3 # if the response not receiving 2xx, how many times it should accept failure to restart the container again, default is 3
+      #   successThreshold: 1 # if the response receiving 2xx, how many times it should check the route correctness to pass the testing, default is 1
+     
+      readinessProbe:
+        # Ensures that the container is "ready to receive requests" by preforming one or more checks.
+        # if the container fails the readiness probes, Kubernetes will not route requests to it (PENDING) (it will not restart it) 
         httpGet:
           path : / # or any other get routes /health
           port: 8080
         initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
-        timeoutSeconds: 1 # How many S waiting for the response of the route, default is 1 , if not working it will restart
         periodSeconds: 60 # test the container per S, default is 10
-        failureThreshold: 3 # if the response not receiving 2xx, how many times it should accept failure to restart the container again, default is 3
-        successThreshold: 1 # if the response receiving 2xx, how many times it should check the route correctness to pass the testing, default is 1
