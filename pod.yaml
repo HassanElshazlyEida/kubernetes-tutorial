@@ -17,6 +17,9 @@ spec:
         httpGet:
           path : / # or any other get routes /health
           port: 8080
+        # tcpSocket: 
+          # other checks if the image not support http protocol like mysql, kafka to check if the port is accepting
+        #   port: 3306
         initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
         timeoutSeconds: 1 # How many S waiting for the response of the route, default is 1 , if not working it will restart
         periodSeconds: 60 # test the container per S, default is 10
@@ -26,6 +29,12 @@ spec:
       readinessProbe:
         # Ensures that the container is "ready to receive requests" by preforming one or more checks.
         # if the container fails the readiness probes, Kubernetes will not route requests to it (PENDING) (it will not restart it) 
+      
+        # exec:
+          # another check if the image not support http protocol to run command on the image to check is up and running 
+        #   command:
+        #     - cat
+        #     - /tmp/ready
         httpGet:
           path : / # or any other get routes /health
           port: 8080
