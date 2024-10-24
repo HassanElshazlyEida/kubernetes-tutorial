@@ -10,7 +10,15 @@ spec:
         - containerPort : 80
           name: http
           protocol: TCP
-          
+      resources:
+        requests:
+          # The amount of CPU and memory the container requires to function properly at minimum
+          cpu: "500m" # millecore = 1 / 10000 core "0.5" == "500m"
+          memory: "128mi"
+        limits:
+          # The amount of CPU and memory the container cannot exceed at maximum
+          cpu: "700m"
+          memory: "700mi"
       livenessProbe: 
         # Ensures that the container is "live" by performing one or more checks
         # if the container failed the liveness probe, Kubernetes restarts it
