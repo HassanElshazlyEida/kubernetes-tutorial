@@ -19,7 +19,6 @@ spec:
           # The amount of CPU and memory the container cannot exceed at maximum
           cpu: "700m"
           memory: "700Mi"
-      
       livenessProbe: 
         # Ensures that the container is "live" by performing one or more checks
         # if the container failed the liveness probe, Kubernetes restarts it
@@ -59,3 +58,24 @@ spec:
           port: 8080
         initialDelaySeconds: 5 # After the container is running how many S to start testing, default is 0
         periodSeconds: 60 # test the container per S, default is 10
+  volumes:
+    # Store the data for the duration of the pod
+    # Data is not lost when the container is restarted
+    # Data does not persist when the pod is moved to another node
+    - name : cache-volume
+      emptyDir:
+        sizeLimit: "500Mi"
+        # medium: Memory # if the storage need to save to the memory of the container not in Pods Storage
+    # - name: myHostPathVolume
+    #   # Allows you to mount a file or dir from the host node (Not Recommended)
+    #   hostPath:
+    #     path: /etc/data
+    #     type: DirectoryOrCreate  # OR FileOrCreate OR File
+
+    # - name: myNfsVolume
+    #   # Can be used to share data among pods on the same or on different nodes
+    #   nfs:
+    #     server: 192.168.2.138
+    #     path: /path/to/share
+    #     readOnly: true
+    
