@@ -2,6 +2,12 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: web
+  annotations: 
+    # key-value pairs attached to objects that can be used to store arbitrary, non-identifying metadata. 
+    # Unlike labels, annotations are not used for selecting objects but can be useful for storing additional ..
+    # information about an object, such as a description or a timestamp.
+    documentation-url: "https://docs.example.com/service-xyz"
+    support-ticket: "https://jira.example/browse/PROJ-123"
 spec:
   containers: 
     - image: nginx
