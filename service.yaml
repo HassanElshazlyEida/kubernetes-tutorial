@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-service
+  # Domain name = service-name.namespace.svc.cluster.local => app-service.default.svc.cluster.local
 spec:
   selector:
     app.kubernetes.io/name: "backend"
@@ -9,4 +10,8 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: http # port name or 80
-  type: ClusterIP
+  type: ClusterIP # or NodePort or LoadBalancer or ExternalName
+  # ClusterIP : Exposes the Service on a cluster-internal IP , Cluster [node 1, node 2, ..]
+  # NodePort : Exposes the Service on each Node's IP at a static port
+  # LoadBalancer : Exposes the Service externally using an external load balancer. Kubernetes does not directly offer a load balancing component; you must provide one
+  # ExternalName : Maps the Service to the contents of the externalName (for example, to the hostname api.foo.bar.example)
