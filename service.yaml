@@ -9,9 +9,12 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: http # port name or 80
+      targetPort: 9376 # port name or 80
   type: ClusterIP # or NodePort or LoadBalancer or ExternalName
-  # ClusterIP : Exposes the Service on a cluster-internal IP , Cluster [node 1, node 2, ..]
+  # (Default) ClusterIP : Exposes the Service on a cluster-internal IP , Cluster [node 1, node 2, ..]
   # NodePort : Exposes the Service on each Node's IP at a static port
   # LoadBalancer : Exposes the Service externally using an external load balancer. Kubernetes does not directly offer a load balancing component; you must provide one
   # ExternalName : Maps the Service to the contents of the externalName (for example, to the hostname api.foo.bar.example)
+ 
+  # type: ExternalName
+  # externalName: db.external.net
