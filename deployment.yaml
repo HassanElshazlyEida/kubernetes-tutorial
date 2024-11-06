@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "backend"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # max number of pods that can be created during the update
+      maxUnavailable: 1 # max number of pods that can be unavailable during the update
+  minReadySeconds: 5 # minimum number of seconds for a newly created pod to be ready
+  revisionHistoryLimit: 3 # maximum number of old revisions to retain
+  progressDeadlineSeconds: 60 # maximum time in seconds for a deployment to make progress
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "backend"
+    spec:
+      containers:
+      - name: replica-backend-container
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        
