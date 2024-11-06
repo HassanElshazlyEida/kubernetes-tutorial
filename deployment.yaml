@@ -8,7 +8,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: "backend"
   strategy:
-    type: RollingUpdate
+    type: RollingUpdate # update a set of pods without downtime
+    # type: Recreate # deletes the old pod and creates a new one with the same time
     rollingUpdate:
       maxSurge: 1 # max number of pods that can be created during the update
       maxUnavailable: 1 # max number of pods that can be unavailable during the update

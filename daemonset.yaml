@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: DaemonSet
+# This will create a DaemonSet that runs a Pod with the fluent logging container on every node in the cluster.
+# This is a good example of how you can use DaemonSets to run a single container on every node in the cluster.
+metadata:
+  name: fluentd-daemon-set
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "backend"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "backend"
+    spec:
+      containers:
+      - name: fluentd
+        image: fluent/fluentd:v1.17.1-1.0
+        ports:
+        - containerPort: 80
+  updateStrategy:
+    type: RollingUpdate
